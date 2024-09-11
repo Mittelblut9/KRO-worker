@@ -24,9 +24,9 @@ services:
     user: root
     volumes:
       - ./:/usr/src/app
-    # command: "air"
     working_dir: /usr/src/app
-    command: "go run ."
     depends_on:
       postgres:
         condition: service_healthy
+    tty: true
+    stdin_open: true
