@@ -2,7 +2,7 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-  CREATE TABLE "alerts" (
+  CREATE TABLE IF NOT EXISTS "alerts" (
       "id" SERIAL PRIMARY KEY,
       "title" varchar,
       "text" text,
@@ -10,14 +10,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
       "createdAt" timestamp NOT NULL DEFAULT now()
   );
 
-  CREATE TABLE "upcoming_streams" (
+  CREATE TABLE IF NOT EXISTS "upcoming_streams" (
       "id" SERIAL PRIMARY KEY,
       "date" timestamptz,
       "clip_id" varchar NOT NULL DEFAULT ''::character varying,
       "content" text NOT NULL DEFAULT ''::text
   );
 
-  CREATE TABLE "public"."vods" (
+  CREATE TABLE IF NOT EXISTS "public"."vods" (
     "transcript" text,
     "vodid" varchar NOT NULL,
     "title" text DEFAULT ''::text,

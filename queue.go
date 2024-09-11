@@ -46,8 +46,8 @@ func process() {
 		upcoming, err := classify(transcription.Text, video)
 
 		if err != nil {
-      panic(err)
-    }
+			// panic(err)
+		}
 
 		transcriptionJson, err := json.Marshal(transcription)
 
