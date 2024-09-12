@@ -32,13 +32,13 @@ func main() {
 
 		var newestVideo api.Video
 
-		newestVideo = videos[:len(sl)-1]
+		newestVideo := (*videos)[:len(sl)-1]
 
 		fmt.Printf("Newest video: %s\n", newestVideo.ID)
 		if lo.Contains(alreadyDownloaded, video.ID) {
 			return
 		}
-		
+
 		addToQueue(newestVideo)
 
 		// lo.ForEach[api.Video](*videos, func(video api.Video, index int) {
