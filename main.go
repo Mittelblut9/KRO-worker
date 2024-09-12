@@ -32,7 +32,7 @@ func main() {
 
 		var newestVideo api.Video
 
-		newestVideo = (*videos)[len(*videos)-1]
+		newestVideo = (*videos)[0]
 
 		fmt.Printf("Newest video: %s\n", newestVideo.ID)
 		if lo.Contains(alreadyDownloaded, newestVideo.ID) {
