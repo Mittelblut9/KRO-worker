@@ -30,14 +30,19 @@ func main() {
 			panic(err)
 		}
 
-		lo.ForEach[api.Video](*videos, func(video api.Video, index int) {
-			if lo.Contains(alreadyDownloaded, video.ID) {
-				return
-			}
+		newestVideo = videos[:len(sl)-1]
+
+		fmt.Printf("Newest video: %s\n", newestVideo.ID)
+		addToQueue(newestVideo)
+
+		// lo.ForEach[api.Video](*videos, func(video api.Video, index int) {
+		// 	if lo.Contains(alreadyDownloaded, video.ID) {
+		// 		return
+		// 	}
 			
-			fmt.Printf("New Vod \"%s\" found.\n", video.ID)
-			addToQueue(&video)
-		})
+		// 	fmt.Printf("New Vod \"%s\" found.\n", video.ID)
+		// 	addToQueue(&video)
+		// })
 
 		process()
 	} else {
