@@ -35,7 +35,7 @@ func main() {
 		newestVideo = (*videos)[len(*videos)-1]
 
 		fmt.Printf("Newest video: %s\n", newestVideo.ID)
-		if lo.Contains(alreadyDownloaded, video.ID) {
+		if lo.Contains(alreadyDownloaded, newestVideo.ID) {
 			return
 		}
 
