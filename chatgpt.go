@@ -63,25 +63,10 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 		fmt.Printf("ChatCompletion error: %v\n", err)
 		return Upcoming{}, err
 	}
-
-	if resp == nil {
-		fmt.Println("Response is nil")
-		return Upcoming{}, errors.New("nil response")
-	}
 	
 	if resp.Choices == nil || len(resp.Choices) == 0 {
-		fmt.Println("Choices is nil or empty")
-		return Upcoming{}, errors.New("nil or empty choices")
-	}
-	
-	if resp.Choices[0].Message == nil || resp.Choices[0].Message.FunctionCall == nil {
-		fmt.Println("Message or FunctionCall is nil")
-		return Upcoming{}, errors.New("nil message or function call")
-	}
-	
-	if resp.Choices[0].Message.FunctionCall.Arguments == nil {
-		fmt.Println("Arguments is nil")
-		return Upcoming{}, errors.New("nil arguments")
+		fmt.Println("No choices found")
+		return Upcoming{}, nil
 	}
 	
 	err = json.Unmarshal([]byte(resp.Choices[0].Message.FunctionCall.Arguments), &data)
