@@ -1,0 +1,3 @@
+[submodule "KRO-website"]
+	path = KRO-website
+	url = https://github.com/Mittelblut9/KRO-website

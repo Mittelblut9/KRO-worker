@@ -30,3 +30,15 @@ services:
         condition: service_healthy
     tty: true
     stdin_open: true
+
+  app:
+    image: node:20.9
+    working_dir: /app
+    volumes:
+      - ./KRO-website:/app
+    command: >
+      sh -c "npm install && npm run build && node .output/server/index.mjs"
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
