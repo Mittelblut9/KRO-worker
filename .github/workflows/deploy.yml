@@ -18,7 +18,7 @@ jobs:
 
             - name: Copy .env.app
               run: |
-                ${{ secrets.ENV_PROD }} > .env.app
+                echo "${{ secrets.ENV_PROD }}" >> .env.app
             
             - name: Update Website
               run: |
