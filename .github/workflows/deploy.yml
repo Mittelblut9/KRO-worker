@@ -1,0 +1,32 @@
+name: KRO-Worker Deployment
+
+on:
+    push:
+        branches:
+            - main
+    release:
+        types: [published]
+
+jobs:
+    build:
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                ref: main
+                fetch-depth: 0
+
+            - name: Copy .env
+              run: |
+                ${{ secrets.ENV_PROD }} > .env
+            
+            - name: Update Website
+              run: |
+                git submodule update --recursive --init
+
+            - name: Stop all docker
+              run: docker compose down
+
+            - name: Start all docker
+              run: |
+                docker compose up -d
