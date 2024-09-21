@@ -20,6 +20,8 @@ services:
       timeout: 60s
       retries: 5
       start_period: 20s
+    env_file:
+      - .env
 
   worker:
     build:
@@ -45,4 +47,4 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - .env.app
+      - .env
