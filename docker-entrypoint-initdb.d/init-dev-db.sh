@@ -2,19 +2,8 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-  CREATE TABLE IF NOT EXISTS "alerts" (
-      "id" SERIAL PRIMARY KEY,
-      "title" varchar,
-      "text" text,
-      "active" bool DEFAULT false,
-      "createdAt" timestamp NOT NULL DEFAULT now()
-  );
-
-  CREATE TABLE IF NOT EXISTS "upcoming_streams" (
-      "id" SERIAL PRIMARY KEY,
-      "date" timestamptz,
-      "clip_id" varchar NOT NULL DEFAULT ''::character varying,
-      "content" text NOT NULL DEFAULT ''::text
+  CREATE TABLE IF NOT EXISTS "public"."streams" (
+    "date" timestamptz DEFAULT now(),
   );
 
   CREATE TABLE IF NOT EXISTS "public"."vods" (

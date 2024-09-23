@@ -14,6 +14,7 @@ func main() {
 	isOnline, err := isStreamerLive()
 
 	if err == nil && isOnline {
+		persistStream()
 		fmt.Println("Streamer is online; skip")
 	} else if !isOnline {
 		fmt.Println("Streamer is offline")

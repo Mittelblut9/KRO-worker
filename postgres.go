@@ -64,3 +64,14 @@ func persist(transcript string, vod api.Video, upcoming []string, duration time.
 		log.Fatalf("Error executing SQL statement: %v", err)
 	}
 }
+
+func persistStream() {
+	db := getConnection()
+
+	sqlStatement := `INSERT INTO streams (date) VALUES ($1)`
+	_, err := db.Exec(sqlStatement, time.Now())
+
+	if err != nil {
+		log.Fatalf("Error executing SQL statement: %v", err)
+	}
+}
