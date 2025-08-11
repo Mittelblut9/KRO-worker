@@ -49,7 +49,7 @@ services:
 
   app:
     build:
-      dockerfile: .prod/Dockerfile.web
+      dockerfile: Dockerfile.web
       context: ../.
     ports:
       - 3000:3000
