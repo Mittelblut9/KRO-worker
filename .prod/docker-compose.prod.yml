@@ -7,7 +7,7 @@ networks:
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16
     user: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
