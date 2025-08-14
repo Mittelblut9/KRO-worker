@@ -14,7 +14,7 @@ import (
 
 type Upcoming struct {
 	Dates       []string `json:"dates"`
-	MaybeOnline bool     `json:"maybe_online"` // geaendert fon vilt_online
+	MaybeOnline bool     `json:"maybe_online"` 
 }
 
 func classify(transcription string, video api.Video) (Upcoming, error) {
@@ -33,7 +33,7 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 					},
 					Description: "Array of planned stream dates in RFC3339 format",
 				},
-				"maybe_online": { // geaendert von vilt_online
+				"maybe_online": { 
 					Type: jsonschema.Boolean,
 					Description: "True if streamer is uncertain about streaming plans",
 				},
