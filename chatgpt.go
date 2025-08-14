@@ -13,8 +13,8 @@ import (
 )
 
 type Upcoming struct {
-	Dates      []string `json:"dates"`
-	ViltOnline bool     `json:"vilt_online"`
+	Dates       []string `json:"dates"`
+	MaybeOnline bool     `json:"maybe_online"` 
 }
 
 func classify(transcription string, video api.Video) (Upcoming, error) {
@@ -22,7 +22,7 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 
 	functionDefinitions := openai.FunctionDefinition{
 		Name: "has_online_intend",
-		Description: "Evaluate if the streamer will stream again. Set vilt_online=true if uncertain or no clear data.",
+		Description: "Evaluate if the streamer will stream again. Set maybe_online=true if uncertain or no clear data.",
 		Parameters: jsonschema.Definition{
 			Type: jsonschema.Object,
 			Properties: map[string]jsonschema.Definition{
@@ -33,9 +33,9 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 					},
 					Description: "Array of planned stream dates in RFC3339 format",
 				},
-				"vilt_online": {
+				"maybe_online": { 
 					Type: jsonschema.Boolean,
-					Description: "True if streamer is uncertain or no data about streaming",
+					Description: "True if streamer is uncertain about streaming plans",
 				},
 			},
 		},
@@ -48,13 +48,20 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 			Functions: []openai.FunctionDefinition{functionDefinitions},
 			Messages: []openai.ChatCompletionMessage{
 				{
-					Role:    openai.ChatMessageRoleSystem,
-					Content: "You evaluate if a streamer will stream again. Return vilt_online=true if uncertain or no clear statement. Return empty array only if clearly no plans.",
+					Role: openai.ChatMessageRoleSystem,
+					Content: `You analyze streamer transcripts to predict future streams. Evaluate:
+1. Return dates[] if streamer announced specific plans
+2. Set maybe_online=true if:
+   - Streamer is uncertain ("maybe", "not sure")
+   - Mentions potential streams without dates
+   - No clear streaming intentions
+3. Return empty dates[] only when clearly stating no streams planned
+Consider context, tone and streamer's usual patterns.`,
 				},
 				{
 					Role:    openai.ChatMessageRoleUser,
 					Content: fmt.Sprintf(
-						"Transcription from %s: %s",
+						"Stream from %s. Analyze for streaming plans:\n%s",
 						video.PublishedAt.Format(time.RFC3339),
 						transcription,
 					),
@@ -73,7 +80,7 @@ func classify(transcription string, video api.Video) (Upcoming, error) {
 		return Upcoming{}, nil
 	}
 
-	// Debugging: Save raw response
+	// debug output
 	if f, err := os.Create("chatgpt.json"); err == nil {
 		defer f.Close()
 		json.NewEncoder(f).Encode(resp)
