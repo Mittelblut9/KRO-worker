@@ -16,6 +16,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     "view_count" int8 DEFAULT 0,
     "online_intend_date" text DEFAULT ''::text,
     "duration" float4 DEFAULT 0,
+    "maybe_online" boolean DEFAULT false,
     PRIMARY KEY ("vodid")
   );
 EOSQL
