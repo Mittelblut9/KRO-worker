@@ -8,15 +8,6 @@ jobs:
     deploy:
         runs-on: self-hosted
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                ref: main
-                fetch-depth: 0
-                path: '.prod'
-                sparse-checkout: '.prod'
-                sparse-checkout-cone-mode: false
-
             - name: Login to Docker Hub
               uses: docker/login-action@v3
               with:
@@ -25,16 +16,13 @@ jobs:
 
             - name: Pull Docker images
               run: |
-                  docker image pull mittelblut9/kommtrumathraonline-web:latest
                   docker image pull mittelblut9/kommtrumathraonline-worker:latest
 
             - name: Stop and remove old containers
               run: |
-                  docker container stop kommtrumathraonline-web
                   docker container stop kommtrumathraonline-worker
-                  docker container rm kommtrumathraonline-web
                   docker container rm kommtrumathraonline-worker
 
-            - name: Deploy new containers
+            - name: Start Worker
               run: |
-                  docker compose -f ./.prod/docker-compose.prod.yml up -d
+                  docker run -d --name kommtrumathraonline-worker --env-file ./.prod/.env mittelblut9/kommtrumathraonline-worker:latest
