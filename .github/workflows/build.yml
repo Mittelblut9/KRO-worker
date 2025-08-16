@@ -33,7 +33,7 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 context: ./KRO-website
-                file: ./.docker/Dockerfile.web
+                file: ./.docker/Dockerfile
                 push: true
                 tags: mittelblut9/kommtrumathraonline-web:latest
 
@@ -41,6 +41,6 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 context: ./KRO-worker
-                file: ./.docker/Dockerfile.worker
+                file: ./.docker/Dockerfile
                 push: true
                 tags: mittelblut9/kommtrumathraonline-worker:latest
