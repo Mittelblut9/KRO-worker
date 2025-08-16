@@ -31,9 +31,7 @@ services:
       - intern
 
   worker:
-    build:
-      context: ../.
-      dockerfile: Dockerfile
+    image: mittelblut9/kommtrumathraonline-worker:latest
     user: root
     volumes:
       - ../:/usr/src/app
@@ -48,9 +46,7 @@ services:
     restart: unless-stopped
 
   app:
-    build:
-      dockerfile: .prod/Dockerfile.web
-      context: ../.
+    image: mittelblut9/kommtrumathraonline-web:latest
     ports:
       - 3000:3000
     env_file:
