@@ -9,8 +9,17 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout Web Code
+              uses: actions/checkout@v4
               with:
+                path: 'KRO-website'
+                ref: main
+                fetch-depth: 0
+
+            - name: Checkout Worker Code
+              uses: actions/checkout@v4
+              with:
+                path: 'KRO-worker'
                 ref: main
                 fetch-depth: 0
 
@@ -23,7 +32,7 @@ jobs:
             - name: Build and push (Web)
               uses: docker/build-push-action@v4
               with:
-                context: .
+                context: ./KRO-website
                 file: ./.docker/Dockerfile.web
                 push: true
                 tags: mittelblut9/kommtrumathraonline-web:latest
@@ -31,7 +40,7 @@ jobs:
             - name: Build and push (Worker)
               uses: docker/build-push-action@v4
               with:
-                context: .
+                context: ./KRO-worker
                 file: ./.docker/Dockerfile.worker
                 push: true
                 tags: mittelblut9/kommtrumathraonline-worker:latest
