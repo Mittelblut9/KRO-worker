@@ -30,6 +30,10 @@ jobs:
               run: |
                 cp .env KRO-website/.env
 
+            - name: Build
+              run: |
+                docker compose -f .prod/docker-compose.prod.yml build app
+
             - name: Stop all docker
               run: |
                 docker compose -f .prod/docker-compose.prod.yml down --remove-orphans
@@ -39,5 +43,4 @@ jobs:
                 export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
                 export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
                 export POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }}
-                docker compose -f .prod/docker-compose.prod.yml build app
                 docker compose -f .prod/docker-compose.prod.yml up -d
