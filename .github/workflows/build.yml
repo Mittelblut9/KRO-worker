@@ -27,4 +27,4 @@ jobs:
                 context: .
                 file: ./.docker/Dockerfile
                 push: true
-                tags: mittelblut9/kommtrumathraonline-worker:latest
+                tags: docker/kommtrumathraonline-worker:latest
