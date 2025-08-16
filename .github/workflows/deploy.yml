@@ -16,7 +16,7 @@ jobs:
 
             - name: Pull Docker images
               run: |
-                  docker image pull mittelblut9/kommtrumathraonline-worker:latest
+                  docker image pull blackdayz/kommtrumathraonline-worker:latest
 
             - name: Stop and remove old containers
               run: |
@@ -25,4 +25,4 @@ jobs:
 
             - name: Start Worker
               run: |
-                  docker run -d --name kommtrumathraonline-worker --env-file ./.prod/.env mittelblut9/kommtrumathraonline-worker:latest
+                  docker run -d --name kommtrumathraonline-worker --env-file ./.prod/.env blackdayz/kommtrumathraonline-worker:latest

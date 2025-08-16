@@ -27,4 +27,4 @@ jobs:
                 context: .
                 file: ./.docker/Dockerfile
                 push: true
-                tags: docker/kommtrumathraonline-worker:latest
+                tags: blackdayz/kommtrumathraonline-worker:latest
